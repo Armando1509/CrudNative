@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 const Inicio = () =>{
     return(
         <View>
-            <Text>Desde inicio</Text>
+            <Text>Desde 4545456456456456456inicio</Text>
         </View>
     )
 }
