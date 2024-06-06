@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
+import {List, Button, Headline, FAB} from "react-native-paper"
 
-const Inicio = () =>{
+const Inicio = ({navigation}) =>{
+
+    const [consultarAPI, guardarConsultarAPI] = useState(true)
     return(
         <View>
-            <Text>Desde 4545456456456456456inicio</Text>
+            <Text>Aplicacion de conde</Text>
+            <Button icon="plus-circle" onPress={()=> navigation.navigate("NuevoCliente",{guardarConsultarAPI})} >
+                Nuevo Cliente
+            </Button>
         </View>
     )
 }
 
-export default Inicio
+export default Inicio   
