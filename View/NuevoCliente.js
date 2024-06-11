@@ -1,109 +1,121 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, Platform } from 'react-native';
-import { TextInput, Headline, Button, Paragraph, Dialog, Portal, TextInputMask } from 'react-native-paper';
-import globalStyles from '../styles/global';
-import axios from 'axios';
-
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Platform } from "react-native";
+import {
+  TextInput,
+  Headline,
+  Button,
+  Paragraph,
+  Dialog,
+  Portal,
+} from "react-native-paper";
+import globalStyles from "../styles/global";
+import axios from "axios";
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const NuevoCliente = ({route, navigation}) => {
+  
+console.log(route.params);
+ const { guardarConsultarAPI } = route.params; 
 
-  const[nombre, guardarNombre] = useState("")
-  const[telefono, guardarTelefono] = useState("")
-  const[correo, guardarCorreo] = useState("")
-  const[empresa, guardarEmpresa] = useState("")
-  const[alerta, guardarAlerta] = useState(false)
+ useEffect(() => {
+  navigation.setOptions({
+    guardarConsultarAPI: guardarConsultarAPI,
+  });
+}, [navigation]);
+
+
+  const [nombre, guardarNombre] = useState("");
+  const [telefono, guardarTelefono] = useState("");
+  const [correo, guardarCorreo] = useState("");
+  const [empresa, guardarEmpresa] = useState("");
+  const [alerta, guardarAlerta] = useState(false);
 
   //almacenar cliente en la bd
-  const guardarCliente = async() =>{
+  const guardarCliente = async () => {
     //validar
-    if(nombre === "" || telefono === "" || correo === "" || empresa === ""){
-      guardarAlerta(true)
-      return
+    if (nombre === "" || telefono === "" || correo === "" || empresa === "") {
+      guardarAlerta(true);
+      return;
     }
     //Generar cliente
-    const cliente = {nombre, telefono, correo, empresa}
-  
+    const cliente = { nombre, telefono, correo, empresa };
+
     // Si estamos editando o creando un nuevo cliente
-    if(route.params.cliente){
-      const {id}= route.params.cliente
-      cliente.id = id
-      const url = `http://10.0.2.2:3000/clientes/${id}`
+    if (route.params.cliente) {
+      const { id } = route.params.cliente;
+      cliente.id = id;
+      const url = `http://10.0.2.2:3000/clientes/${id}`;
 
       try {
-        await axios.put(url, cliente)
+        await axios.put(url, cliente);
       } catch (error) {
         console.log(error);
       }
-    }else{
+    } else {
       try {
-        if(Platform.OS === 'ios') {
-          await axios.post('http://localhost:3000/clientes', cliente)
-      } else {
-          await axios.post('http://10.0.2.2:3000/clientes', cliente);
-      }
+        if (Platform.OS === "ios") {
+          await axios.post("http://localhost:3000/clientes", cliente);
+        } else {
+          await axios.post("http://10.0.2.2:3000/clientes", cliente);
+        }
       } catch (error) {
         console.log(error);
       }
     }
     //redireccionar
-    navigation.navigate("Inicio")
+    navigation.navigate("Inicio");
     //Limpiar el form
-    guardarNombre("")
-    guardarTelefono("")
-    guardarCorreo("")
-    guardarEmpresa("")
+    guardarNombre("");
+    guardarTelefono("");
+    guardarCorreo("");
+    guardarEmpresa("");
     // cambiar a true para traernos el nuevo cliente
-    guardarConsultarAPI(true)
-  }
+    guardarConsultarAPI(true);
+  };
   return (
     <View style={globalStyles.contenedor}>
-
-      <Headline style={globalStyles.titulo} >Añadir Nuevo Cliente</Headline>
+      <Headline style={globalStyles.titulo}>Añadir Nuevo Cliente</Headline>
       <TextInput
-      label="Nombre"
-      placeholder='Armando'
-      onChangeText={texto => guardarNombre(texto)}
-      style={styles.input}
+        label="Nombre"
+        placeholder="Armando"
+        onChangeText={(texto) => guardarNombre(texto)}
+        style={styles.input}
       />
       <TextInput
-      label="Telefono"
-      placeholder='5555-5555'
-      onChangeText={texto => guardarTelefono(texto)}
-      style={styles.input}
-      keyboardType='numeric'
+        label="Telefono"
+        placeholder="5555-5555"
+        onChangeText={(texto) => guardarTelefono(texto)}
+        style={styles.input}
+        keyboardType="numeric"
       />
       <TextInput
-      label="Correo"
-      placeholder='correo@correo'
-      onChangeText={texto => guardarCorreo(texto)}
-      style={styles.input}
-      keyboardType='email-address'
+        label="Correo"
+        placeholder="correo@correo"
+        onChangeText={(texto) => guardarCorreo(texto)}
+        style={styles.input}
+        keyboardType="email-address"
       />
       <TextInput
-      label="Empresa"
-      placeholder='Nombre Empresa'
-      onChangeText={texto => guardarEmpresa(texto)}
-      style={styles.input}
+        label="Empresa"
+        placeholder="Nombre Empresa"
+        onChangeText={(texto) => guardarEmpresa(texto)}
+        style={styles.input}
       />
-      <Button   
-      onPress={()=>guardarCliente()}
-      icon="pencil-circle"
-      mode='contained'
+      <Button
+        onPress={() => guardarCliente()}
+        icon="pencil-circle"
+        mode="contained"
       >
         Guarda Ciente
       </Button>
 
       <Portal>
-        <Dialog
-          visible={alerta}
-          onDismiss={() => guardarAlerta(false)}
-        >
+        <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
           <Dialog.Title>Error</Dialog.Title>
           <Dialog.Content>
             <Paragraph>Todos los campos son obligatorios</Paragraph>
-
           </Dialog.Content>
-          <Button onPress={()=> guardarAlerta(false)} >OK</Button>
+          <Button onPress={() => guardarAlerta(false)}>OK</Button>
         </Dialog>
       </Portal>
     </View>
@@ -111,10 +123,10 @@ const NuevoCliente = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  input:{
+  input: {
     marginBottom: 20,
-    backgroundColor: "transparent"
-  }
-})
+    backgroundColor: "transparent",
+  },
+});
 
 export default NuevoCliente;

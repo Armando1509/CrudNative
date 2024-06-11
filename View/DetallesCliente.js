@@ -49,6 +49,11 @@ const DetallesCliente = ({ navigation, route }) => {
       >
         Eliminar Cliente
       </Button>
+      <FAB
+      icon='pencil'
+      style={globalStyles.fab}
+      onPress={()=> navigation.navigate("NuevoCliente", {cliente: route.params.item,  guardarConsultarAPI })}
+      />
     </View>
   );
 };
