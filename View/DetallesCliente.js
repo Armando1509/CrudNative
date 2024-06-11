@@ -17,7 +17,14 @@ const DetallesCliente = ({navigation, route}) => {
       ]
     )
   }
-  
+  const eliminarContacto = async () =>{
+    const url = `http://10.0.2.2:3000/clientes/${id}`
+    try {
+      await axios.delete(url)
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <View>
       <Text>Desde detalles cliente</Text>
