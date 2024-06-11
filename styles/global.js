@@ -24,7 +24,8 @@ const globalStyles = StyleSheet.create({
     },
     boton: {
         marginTop: 100,
-        backgroundColor: 'red'
+        backgroundColor: 'red',
+        color: 'white'
     }
 })
 

@@ -1,17 +1,6 @@
 {
   "clientes": [
     {
-      "nombre": "armando",
-      "id": "ec34"
-    },
-    {
-      "id": "7d69",
-      "nombre": "armando",
-      "telefono": "5454321231",
-      "correo": "armando@gmail.com",
-      "empresa": "coinem"
-    },
-    {
       "id": "d300",
       "nombre": "Emmanuel",
       "telefono": "5557973046",
