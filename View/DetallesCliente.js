@@ -24,10 +24,15 @@ const DetallesCliente = ({navigation, route}) => {
     } catch (error) {
       console.log(error);
     }
+    //redireccionar
+    navigation.navigate('Inicio')
+    // volver a consultar la api
+    guardarConsultarAPI(true)
   }
   return (
-    <View>
-      <Text>Desde detalles cliente</Text>
+    <View style={globalStyles.contenedor} >
+      <Headline style={globalStyles.titulo} >{nombre}</Headline>
+      
     </View>
   );
 };
