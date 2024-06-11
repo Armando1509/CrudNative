@@ -32,6 +32,9 @@ const DetallesCliente = ({navigation, route}) => {
   return (
     <View style={globalStyles.contenedor} >
       <Headline style={globalStyles.titulo} >{nombre}</Headline>
+      <Text style={globalStyles.texto} >Empresa: <Subheading> {empresa} </Subheading> </Text>
+      <Text style={globalStyles.texto} >Correo: <Subheading> {correo} </Subheading> </Text>
+      <Text style={globalStyles.texto} >Telefono: <Subheading> {telefono} </Subheading> </Text>
       
     </View>
   );
